@@ -7,11 +7,6 @@
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <title>HowFun Cutting</title>
-        <script type="text/javascript">
-            document.getElementById("getVideo").addEventListener("click", function(){
-                document.getElementById("iptMsg").innerHTML = "Hello World";
-            });
-        </script>
     </head>
     <body>
         <div class="container-fluid bg-dark fill border border-dark">
@@ -31,18 +26,65 @@
                         <form class="line-size">
                             <button type="button" class="btn btn-dark embed-size" disabled>祝賀詞</button>
                             <div class="btn-group line-size" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-secondary">鵬程萬里畢業快樂</button>
-                                <button type="button" class="btn btn-secondary">步步高升畢業快樂</button>
-                                <button type="button" class="btn btn-secondary">前程似錦畢業快樂</button>
-                                <button type="button" class="btn btn-secondary">大鵬展翅畢業快樂</button>
-                                <button type="button" class="btn btn-secondary">指考一百畢業快樂</button>
+                                <button id="congNoun1" v-on:click="getContext" type="button" class="btn btn-secondary">鵬程萬里畢業快樂</button>
+                                <button id="congNoun2" v-on:click="getContext" type="button" class="btn btn-secondary">步步高升畢業快樂</button>
+                                <button id="congNoun3" v-on:click="getContext" type="button" class="btn btn-secondary">前程似錦畢業快樂</button>
+                                <button id="congNoun4" v-on:click="getContext" type="button" class="btn btn-secondary">大鵬展翅畢業快樂</button>
+                                <button id="congNoun5" v-on:click="getContext" type="button" class="btn btn-secondary">指考一百畢業快樂</button>
                             </div>
                             <button type="button" class="btn btn-dark embed-size" disabled>祝賀內容</button>
                             <div class="input-group input-group-lg">
-                                <input type="text" class="form-control input-width" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="勿輸入言文字、符號，如需停頓請加上空白">
+                                <textarea id="iptMsg" type="text" class="form-control input-width" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="勿輸入言文字、符號，如需停頓請加上空白"></textarea>
                             </div>
                             <p></p>
                             <input id="getVideo" type="button" class="btn-font-size btn btn-primary space input-btn-width" value="祝賀影片取得"></textarea>
+                            <script type="text/javascript">
+                                var congNounOne = new Vue({
+                                    el: '#congNoun1',
+                                    methods: {
+                                        getContext() {
+                                            msg = iptMsg.value + '鵬程萬里畢業快樂'
+                                            iptMsg.value = msg
+                                        }
+                                    }
+                                })
+                                var congNounTwo = new Vue({
+                                    el: '#congNoun2',
+                                    methods: {
+                                        getContext() {
+                                            msg = iptMsg.value + '步步高升畢業快樂'
+                                            iptMsg.value = msg
+                                        }
+                                    }
+                                })
+                                var congNounThree = new Vue({
+                                    el: '#congNoun3',
+                                    methods: {
+                                        getContext() {
+                                            msg = iptMsg.value + '前程似錦畢業快樂'
+                                            iptMsg.value = msg
+                                        }
+                                    }
+                                })
+                                var congNounFour = new Vue({
+                                    el: '#congNoun4',
+                                    methods: {
+                                        getContext() {
+                                            msg = iptMsg.value + '大鵬展翅畢業快樂'
+                                            iptMsg.value = msg
+                                        }
+                                    }
+                                })
+                                var congNounFive = new Vue({
+                                    el: '#congNoun5',
+                                    methods: {
+                                        getContext() {
+                                            msg = iptMsg.value + '指考一百畢業快樂'
+                                            iptMsg.value = msg
+                                        }
+                                    }
+                                })
+                            </script>
                         </form>
                     </div>
                 </div>
