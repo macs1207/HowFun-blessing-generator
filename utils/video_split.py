@@ -1,4 +1,4 @@
-from subprocess import Popen, PIPE, run
+from subprocess import PIPE, run
 import os
 import json
 
@@ -12,9 +12,8 @@ class VideoSplitter:
 
     def words_iter(self, dir_name):
         file_path = os.path.join("dictionarys", f"{dir_name}.json")
-        timeline_path = os.path.join(self.path, file_path)
         
-        with open(timeline_path, "r", encoding="utf-8") as f:
+        with open(file_path, "r", encoding="utf-8") as f:
             self.timeline = json.load(f)
         
         args = []
@@ -35,8 +34,8 @@ class VideoSplitter:
         command.extend(args)
         print(*command)
 
-        run(command, stdin = PIPE, stdout = PIPE, shell = True)
+        run(command, stdin=PIPE, stdout=PIPE, shell=True)
 
 if __name__ == "__main__":
     v = VideoSplitter()
-    v.words_iter()
+    v.words_iter("ㄓ")
