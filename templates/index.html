@@ -3,95 +3,208 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+        
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <title>HowFun Cutting</title>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap" rel="stylesheet">
+        <title>HowFun 祝賀語產生器</title>
     </head>
     <body>
         <div class="container-fluid bg-dark fill border border-dark">
-            <div class="card center embed-card" style="width: 30rem;">
+            <div class="alert alert-primary col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size" role="alert" style="width: 35rem; margin-top: 5rem;">
+                目前為先行釋出的 Beta 版本，未完善之處請多包涵<(_ _)>
+            </div>
+            <div class="card center embed-card" style="width: 35rem;">
                 <div class="card-body">
                     <div class="card-title">
-                        <h1 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size">How哥畢業祝賀</h1>
+                        <h1 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size">HowFun 祝賀語產生器</h1>
                     </div>
                     <div class="row">
                         <div class="container line-size">
-                            <iframe class="frame-size" frameborder="0"
-                            src="https://www.youtube.com/embed/sNcvgpUqrwE">
+                            <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size">Demo 影片</h3>
+                            <a href="https://github.com/macs1207/HowFun-blessing-generator" class="btn btn-primary" target="_blank">GitHub</a>
+                            <video width="460" height="315" controls>
+                                <source src="/video?v=demo" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card center embed-card" style="width: 35rem;" id="generator">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size">可以輸入注音ㄛ，特殊符號先不要</h3>
+                    </div>
+                    <div class="row justify-content-sm-center justify-content-md-center justify-content-lg-center">
+                        <!-- <button type="button" class="btn btn-dark embed-size" disabled>祝賀詞</button>
+                                    <div class="btn-group line-size" role="group" aria-label="Basic example">
+                                        <button id="congNoun1" v-on:click="getContext" type="button" class="btn btn-secondary">鵬程萬里畢業快樂</button>
+                                        <button id="congNoun2" v-on:click="getContext" type="button" class="btn btn-secondary">步步高升畢業快樂</button>
+                                        <button id="congNoun3" v-on:click="getContext" type="button" class="btn btn-secondary">前程似錦畢業快樂</button>
+                                        <button id="congNoun4" v-on:click="getContext" type="button" class="btn btn-secondary">大鵬展翅畢業快樂</button>
+                                        <button id="congNoun5" v-on:click="getContext" type="button" class="btn btn-secondary">指考一百畢業快樂</button>
+                                    </div> -->
+                        <div class="col-10">
+                            <button type="button" class="btn btn-dark embed-size" disabled>祝賀內容</button>
+                            <div class="input-group input-group-lg">
+                                <textarea type="text" class="form-control input-width" aria-label="Large"
+                                    aria-describedby="inputGroup-sizing-sm" placeholder="上限暫時50字" v-model="text"></textarea>
+                            </div>
+                            <button id="send-btn" class="btn-font-size btn btn-primary space input-btn-width" type="button" v-on:click="getVideo">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-show="waiting"></span>
+                                取得祝賀影片
+                            </button>
+                            <!-- <a v-show="video" :href="video" class="btn-font-size btn btn-primary space input-btn-width" target="_blank">下載</a> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                window.generator = new Vue({
+                    el: '#generator',
+                    data: {
+                        text: '',
+                        waiting: false,
+                        video: null,
+                    },
+                    methods: {
+                        getVideo: function () {
+                            if (this.text) {
+                                $("#send-btn").attr('disabled', true);
+                                this.waiting = true;
+                                this.$http.post("/api/video", {
+                                    text: this.text,
+                                }, { emulateJSON: true }).then(
+                                    function (response) {
+                                        // console.log(`${response.status} ${response.bodyText}`);
+                                        this.video = `/video?v=${JSON.parse(response.bodyText)["video_id"]}`;
+                                        // console.log(this.video);
+                                        this.waiting = false;
+                                        $("#send-btn").attr('disabled', false);
+
+                                        window.open(this.video, '_blank')
+                                    }, function (response) {
+                                        console.log(`${response.status} ${response.bodyText}`);
+                                        let errormsg = '未定義錯誤';
+                                        switch (response.bodyText) {
+                                            case "too long":
+                                                errormsg = "字數超過啦";
+                                                break;
+                                            case "empty":
+                                                errormsg = "沒有文字不能送ㄛ";
+                                                break;
+                                            case "not found":
+                                                errormsg = "How哥沒念這個字";
+                                                break;
+                                        }
+                                        Swal.fire(
+                                            errormsg,
+                                            '',
+                                            'error'
+                                        )
+                                        this.waiting = false;
+                                        $("#send-btn").attr('disabled', false);
+                                    }
+                                );
+                            } else {
+                                Swal.fire(
+                                    '沒有文字不能送ㄛ',
+                                    '',
+                                    'error'
+                                )
+                            }
+                        },
+                    }
+                })
+            </script>
+
+            <div class="alert alert-danger col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size" role="alert"
+                style="width: 35rem; margin-top: 2rem;">
+                此網站之影片素材為 <a href="https://www.youtube.com/channel/UCxUzQ3wu0oJP_8YLWt71WgQ" target="_blank">HowFun</a> 頻道所有，如有版權問題，請聯繫 
+                <a href="mailto:m@macs1207.dev">m@macs1207.dev</a>
+            </div>
+
+            <div class="card center embed-card" style="width: 35rem;">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size">影片來源 YouTube</h3>
+                    </div>
+                    <div class="row">
+                        <div class="container line-size">
+                            <iframe class="frame-size" frameborder="0" src="https://www.youtube.com/embed/sNcvgpUqrwE">
                             </iframe>
                         </div>
                     </div>
                     <div class="row">
-                        <form class="line-size">
-                            <button type="button" class="btn btn-dark embed-size" disabled>祝賀詞</button>
-                            <div class="btn-group line-size" role="group" aria-label="Basic example">
-                                <button id="congNoun1" v-on:click="getContext" type="button" class="btn btn-secondary">鵬程萬里畢業快樂</button>
-                                <button id="congNoun2" v-on:click="getContext" type="button" class="btn btn-secondary">步步高升畢業快樂</button>
-                                <button id="congNoun3" v-on:click="getContext" type="button" class="btn btn-secondary">前程似錦畢業快樂</button>
-                                <button id="congNoun4" v-on:click="getContext" type="button" class="btn btn-secondary">大鵬展翅畢業快樂</button>
-                                <button id="congNoun5" v-on:click="getContext" type="button" class="btn btn-secondary">指考一百畢業快樂</button>
+                        <div class="container line-size">
+                            我們也同步釋出素材包和時間軸啦(つ´ω`)つ
+                            <br>
+                            <div class="btn-group" role="group" style="margin-top: 10px;">
+                                <a class="btn btn-secondary" href="https://github.com/macs1207/HowFun-blessing-generator/tree/master/dictionarys" target="_blank">時間軸</a>
+                                <a class="btn btn-secondary" href="https://github.com/macs1207/HowFun-blessing-generator/tree/master/videopack" target="_blank">素材包</a>
                             </div>
-                            <button type="button" class="btn btn-dark embed-size" disabled>祝賀內容</button>
-                            <div class="input-group input-group-lg">
-                                <textarea id="iptMsg" type="text" class="form-control input-width" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="勿輸入言文字、符號，如需停頓請加上空白"></textarea>
-                            </div>
-                            <p></p>
-                            <input id="getVideo" type="button" class="btn-font-size btn btn-primary space input-btn-width" value="祝賀影片取得"></textarea>
-                            <script type="text/javascript">
-                                var congNounOne = new Vue({
-                                    el: '#congNoun1',
-                                    methods: {
-                                        getContext() {
-                                            msg = iptMsg.value + '鵬程萬里畢業快樂'
-                                            iptMsg.value = msg
-                                        }
-                                    }
-                                })
-                                var congNounTwo = new Vue({
-                                    el: '#congNoun2',
-                                    methods: {
-                                        getContext() {
-                                            msg = iptMsg.value + '步步高升畢業快樂'
-                                            iptMsg.value = msg
-                                        }
-                                    }
-                                })
-                                var congNounThree = new Vue({
-                                    el: '#congNoun3',
-                                    methods: {
-                                        getContext() {
-                                            msg = iptMsg.value + '前程似錦畢業快樂'
-                                            iptMsg.value = msg
-                                        }
-                                    }
-                                })
-                                var congNounFour = new Vue({
-                                    el: '#congNoun4',
-                                    methods: {
-                                        getContext() {
-                                            msg = iptMsg.value + '大鵬展翅畢業快樂'
-                                            iptMsg.value = msg
-                                        }
-                                    }
-                                })
-                                var congNounFive = new Vue({
-                                    el: '#congNoun5',
-                                    methods: {
-                                        getContext() {
-                                            msg = iptMsg.value + '指考一百畢業快樂'
-                                            iptMsg.value = msg
-                                        }
-                                    }
-                                })
-                            </script>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="card center embed-card" style="width: 35rem;">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size">應該會做的功能</h3>
+                    </div>
+                    <div class="row justify-content-sm-center justify-content-md-center justify-content-lg-center">
+                        <div class="col-10">
+                            <ul class="list-group">
+                                <li class="list-group-item">可選預設祝賀語 (...畢業快樂 etc.)</li>
+                                <li class="list-group-item">後端快取</li>
+                                <li class="list-group-item">防呆加減做</li>
+                                <li class="list-group-item">還沒想到 :></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card center embed-card" style="width: 35rem; margin-bottom: 5rem;">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size">作者們</h3>
+                    </div>
+                    <div class="row justify-content-sm-center justify-content-md-center justify-content-lg-center">
+                        <div class="fb-page" data-href="https://www.facebook.com/NKUST.ITC/" data-tabs="timeline" data-width="460"
+                            data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false"
+                            data-show-facepile="false" style="margin-bottom: 10px;">
+                            <blockquote cite="https://www.facebook.com/NKUST.ITC/" class="fb-xfbml-parse-ignore"><a
+                                    href="https://www.facebook.com/NKUST.ITC/">高科大資訊研習社, NKUST Information Technology Club</a></blockquote>
+                        </div>
+                        <div class="col-10">
+                            <ul class="list-group">
+                                <li class="list-group-item"><a href="https://github.com/macs1207" target="_blank">*Macs</a></li>
+                                <li class="list-group-item"><a href="https://github.com/chrisliu430" target="_blank">C.H</a></li>
+                                <li class="list-group-item"><a href="https://github.com/daidaidarwa" target="_blank">Daiwa</a></li>
+                                <li class="list-group-item"><a href="https://github.com/asdkmm5050" target="_blank">asdkmm5050</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
         </div>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     </body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous"
+        src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v7.0&appId=385662938801036&autoLogAppEvents=1"></script>
+
 </html>
