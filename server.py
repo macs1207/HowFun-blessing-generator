@@ -1,6 +1,6 @@
 from utils import word_parse
 from utils.video_process import VideoProcessor, VideoNotFoundError, VideoCombinedError
-from flask import Flask, request, jsonify, make_response, abort, send_file
+from flask import Flask, request, jsonify, make_response, abort, send_file, render_template
 import os
 import logging
 from argparse import ArgumentParser
@@ -25,7 +25,11 @@ if not os.path.exists("tmp"):
     os.mkdir("video")
 
 
-@app.route('/video', methods=['GET', 'POST'])
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+@app.route('/video', methods=['GET'])
 def get_video():
     if request.method == 'GET':
         video_id = request.values.get('v')
@@ -40,7 +44,11 @@ def get_video():
 def make_video():
     if request.method == 'POST':
         text = request.values.get('text')
-        
+        text = text.strip()
+        if len(text) == 0:
+            return make_response("empty", 500)
+        if len(text) > 50:
+            return make_response("too long", 500)
         try:
             bopomofo = word_parse.get_bopomofo(text)
             v = VideoProcessor()
@@ -51,10 +59,13 @@ def make_video():
             })
         except VideoNotFoundError as e:
             logging.error(e)
+            return make_response("not found", 500)
         except VideoCombinedError as e:
             logging.error(e)
+            return make_response("unknown", 500)
         except Exception as e:
             logging.error(e)
+            return make_response("unknown", 500)
 
 if __name__ == "__main__":
     app.run(host=args.host, port=args.port, debug=args.debug)
