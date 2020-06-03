@@ -4,8 +4,13 @@
 > 歡迎發 PR :)
 
 # 資源
+<<<<<<< HEAD
 - [時間軸](http://howfun.macs1207.info/resource?r=dictionarys.zip)
 - [MP4素材集](http://howfun.macs1207.info/resource?r=videopack.zip)
+=======
+- [時間軸](https://github.com/macs1207/HowFun-blessing-generator/tree/master/dictionarys)
+- [MP4素材集](https://github.com/macs1207/HowFun-blessing-generator/tree/master/videopack)
+>>>>>>> 9364f3b11582392407ead5ba6de38bfda431820d
 
 # 聲明
 此網站之影片素材為 [HowFun](https://www.youtube.com/channel/UCxUzQ3wu0oJP_8YLWt71WgQ) 頻道所有，如有版權問題，請聯繫 m@macs1207.dev
