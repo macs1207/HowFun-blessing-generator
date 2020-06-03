@@ -1,4 +1,5 @@
 from utils import word_parse
+from feedback.feedbk import conn_database
 from utils.video_process import VideoProcessor, VideoNotFoundError, VideoCombinedError
 from flask import Flask, request, jsonify, make_response, abort, send_file, render_template, url_for
 import os
@@ -79,7 +80,17 @@ def make_video():
             logging.error(e)
             return make_response("unknown", 500)
 
-
+@app.route('/api/feedback', method = ['POST'])
+def get_feedbackvalue():
+    if request.method == 'POST':
+        text = request.values.get('feedback')
+        text = text.strip('[]')
+        if len(text) == 0:
+            return make_response("empty", 500)
+        if len(text) > 500:
+            return make_response("too long", 500)
+        conn_database(text)
+        
 @app.context_processor
 def override_url_for():
     return dict(url_for=dated_url_for)
