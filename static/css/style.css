@@ -28,7 +28,7 @@
         font-size: 110%;
     }
     .input-width {
-        width: 80%;
+        width: 100%;
     }
     .embed-size {
         width: 100%;
@@ -56,11 +56,13 @@
 }
 
 html, body, .fill {
+    font-family: 'Noto Sans TC', sans-serif;
     height: auto;
     min-height: 100vh;
     width: 100vw;
     max-width: 100vw;
     min-width: 100vw;
+    overflow-x: hidden;
 }
 
 .center {
@@ -86,10 +88,10 @@ html, body, .fill {
 }
 
 .input-btn-width {
-    width: 80%;
+    width: 100%;
 }
 
 .frame-size {
     height: 315px;
-    width: 420px;
+    width: 460px;
 }
