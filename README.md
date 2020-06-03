@@ -13,7 +13,7 @@
 - [素材來源](https://www.youtube.com/watch?v=sNcvgpUqrwE)
 
 # Demo
-- [連結](https://howfun.macs1207.dev)
+- [連結](http://howfun.macs1207.info)
 
 # 貢獻者 Contributor
 - [*Macs](https://github.com/macs1207)
