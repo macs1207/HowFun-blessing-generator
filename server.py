@@ -1,6 +1,6 @@
 from utils import word_parse
 from utils.video_process import VideoProcessor, VideoNotFoundError, VideoCombinedError
-from flask import Flask, request, jsonify, make_response, abort, send_file, render_template
+from flask import Flask, request, jsonify, make_response, abort, send_file, render_template, url_for
 import os
 import logging
 from argparse import ArgumentParser
@@ -78,6 +78,21 @@ def make_video():
         except Exception as e:
             logging.error(e)
             return make_response("unknown", 500)
+
+
+@app.context_processor
+def override_url_for():
+    return dict(url_for=dated_url_for)
+
+
+def dated_url_for(endpoint, **values):
+    if endpoint == 'static':
+        filename = values.get('filename', None)
+        if filename:
+            file_path = os.path.join(app.root_path,
+                                     endpoint, filename)
+            values['q'] = int(os.stat(file_path).st_mtime)
+    return url_for(endpoint, **values)
 
 if __name__ == "__main__":
     app.run(host=args.host, port=args.port, debug=args.debug)
