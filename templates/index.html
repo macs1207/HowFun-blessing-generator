@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <title>HowFun Cutting</title>
+    </head>
+    <body>
+        <div class="container-fluid bg-dark fill border border-dark">
+            <div class="card center embed-card" style="width: 30rem;">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h1 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size">How哥畢業祝賀</h1>
+                    </div>
+                    <div class="row">
+                        <div class="container line-size">
+                            <iframe class="frame-size" frameborder="0"
+                            src="https://www.youtube.com/embed/sNcvgpUqrwE">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <form class="line-size">
+                            <button type="button" class="btn btn-dark embed-size" disabled>祝賀詞</button>
+                            <div class="btn-group line-size" role="group" aria-label="Basic example">
+                                <button id="congNoun1" v-on:click="getContext" type="button" class="btn btn-secondary">鵬程萬里畢業快樂</button>
+                                <button id="congNoun2" v-on:click="getContext" type="button" class="btn btn-secondary">步步高升畢業快樂</button>
+                                <button id="congNoun3" v-on:click="getContext" type="button" class="btn btn-secondary">前程似錦畢業快樂</button>
+                                <button id="congNoun4" v-on:click="getContext" type="button" class="btn btn-secondary">大鵬展翅畢業快樂</button>
+                                <button id="congNoun5" v-on:click="getContext" type="button" class="btn btn-secondary">指考一百畢業快樂</button>
+                            </div>
+                            <button type="button" class="btn btn-dark embed-size" disabled>祝賀內容</button>
+                            <div class="input-group input-group-lg">
+                                <textarea id="iptMsg" type="text" class="form-control input-width" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="勿輸入言文字、符號，如需停頓請加上空白"></textarea>
+                            </div>
+                            <p></p>
+                            <input id="getVideo" type="button" class="btn-font-size btn btn-primary space input-btn-width" value="祝賀影片取得"></textarea>
+                            <script type="text/javascript">
+                                var congNounOne = new Vue({
+                                    el: '#congNoun1',
+                                    methods: {
+                                        getContext() {
+                                            msg = iptMsg.value + '鵬程萬里畢業快樂'
+                                            iptMsg.value = msg
+                                        }
+                                    }
+                                })
+                                var congNounTwo = new Vue({
+                                    el: '#congNoun2',
+                                    methods: {
+                                        getContext() {
+                                            msg = iptMsg.value + '步步高升畢業快樂'
+                                            iptMsg.value = msg
+                                        }
+                                    }
+                                })
+                                var congNounThree = new Vue({
+                                    el: '#congNoun3',
+                                    methods: {
+                                        getContext() {
+                                            msg = iptMsg.value + '前程似錦畢業快樂'
+                                            iptMsg.value = msg
+                                        }
+                                    }
+                                })
+                                var congNounFour = new Vue({
+                                    el: '#congNoun4',
+                                    methods: {
+                                        getContext() {
+                                            msg = iptMsg.value + '大鵬展翅畢業快樂'
+                                            iptMsg.value = msg
+                                        }
+                                    }
+                                })
+                                var congNounFive = new Vue({
+                                    el: '#congNoun5',
+                                    methods: {
+                                        getContext() {
+                                            msg = iptMsg.value + '指考一百畢業快樂'
+                                            iptMsg.value = msg
+                                        }
+                                    }
+                                })
+                            </script>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    </body>
+</html>
