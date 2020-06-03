@@ -33,57 +33,57 @@ def index():
 def get_video():
     video_id = request.values.get('v')
     if video_id != None:
-		file_path = os.path.join("video", f"{video_id}.mp4")
+        file_path = os.path.join("video", f"{video_id}.mp4")
 
-		if os.path.exists(file_path):
-			return send_file(file_path)
-		else:
-			abort(404)
-	else:
-		return make_response("need video id", 400)
+        if os.path.exists(file_path):
+            return send_file(file_path)
+        else:
+            abort(404)
+    else:
+        return make_response("need video id", 400)
 
 
 @app.route('/resource', methods=['GET'])
 def get_resource():
     r = request.values.get('r')
-	if r != None:
-		file_path = os.path.join("resource", r)
+    if r != None:
+        file_path = os.path.join("resource", r)
 
-		if os.path.exists(file_path):
-			return send_file(file_path)
-		else:
-			abort(404)
-	else:
-		return make_response("need resource id", 400)
+        if os.path.exists(file_path):
+            return send_file(file_path)
+        else:
+            abort(404)
+    else:
+        return make_response("need resource id", 400)
 
 @app.route('/api/video', methods=['POST'])
 def make_video():
     text = request.values.get('text')
-	if text != None:
-		text = text.strip()
-		if len(text) == 0:
-			return make_response("text is empty", 400)
-		if len(text) > 50:
-			return make_response("text is too long", 400)
-		try:
-			bopomofo = word_parse.get_bopomofo(text)
-			v = VideoProcessor()
-			video_id = v.get_video(bopomofo)
-			print(video_id)
-			return jsonify({
-				"video_id": video_id
-			})
-		except VideoNotFoundError as e:
-			logging.error(e)
-			return make_response("video not found error", 500)
-		except VideoCombinedError as e:
-			logging.error(e)
-			return make_response("combin error", 500)
-		except Exception as e:
-			logging.error(e)
-			return make_response("unknown error", 500)
-	else:
-		return make_response("need text", 400)
+    if text != None:
+        text = text.strip()
+        if len(text) == 0:
+            return make_response("text is empty", 400)
+        if len(text) > 50:
+            return make_response("text is too long", 400)
+        try:
+            bopomofo = word_parse.get_bopomofo(text)
+            v = VideoProcessor()
+            video_id = v.get_video(bopomofo)
+            print(video_id)
+            return jsonify({
+                "video_id": video_id
+            })
+        except VideoNotFoundError as e:
+            logging.error(e)
+            return make_response("video not found error", 500)
+        except VideoCombinedError as e:
+            logging.error(e)
+            return make_response("combin error", 500)
+        except Exception as e:
+            logging.error(e)
+            return make_response("unknown error", 500)
+    else:
+        return make_response("need text", 400)
 
 
 @app.context_processor
