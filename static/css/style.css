@@ -1,0 +1,95 @@
+@media screen and (min-width: 992px) {
+    .font-main {
+        font-size: 270%;
+    }
+    .font-second {
+        font-size: 200%;
+    }
+    .btn-font-size {
+        font-size: 140%;
+    }
+    .input-width {
+        width: 100%;
+    }
+    .embed-size {
+        width: 100%;
+        font-size: 80%;
+    }
+}
+
+@media screen and (max-width: 992px) and (min-width: 768px) {
+    .font-main {
+        font-size: 170%;
+    }
+    .font-second {
+        font-size: 130%;
+    }
+    .btn-font-size {
+        font-size: 110%;
+    }
+    .input-width {
+        width: 80%;
+    }
+    .embed-size {
+        width: 100%;
+        font-size: 80%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .font-main {
+        font-size: 200%;
+    }
+    .font-second {
+        font-size: 200%;
+    }
+    .btn-font-size {
+        font-size: 180%;
+    }
+    .input-width {
+        width: 100%;
+    }
+    .embed-size {
+        width: 100%;
+        font-size: 80%;
+    }
+}
+
+html, body, .fill {
+    height: auto;
+    min-height: 100vh;
+    width: 100vw;
+    max-width: 100vw;
+    min-width: 100vw;
+}
+
+.center {
+    display: block;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.line-size {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.space {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+}
+
+.input-btn-width {
+    width: 80%;
+}
+
+.frame-size {
+    height: 315px;
+    width: 420px;
+}
