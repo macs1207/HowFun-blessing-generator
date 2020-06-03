@@ -21,7 +21,7 @@ app = Flask(__name__)
 
 if not os.path.exists("tmp"):
     os.mkdir("tmp")
-if not os.path.exists("tmp"):
+if not os.path.exists("video"):
     os.mkdir("video")
 
 
