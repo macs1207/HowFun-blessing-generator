@@ -40,6 +40,18 @@ def get_video():
         else:
             abort(404)
 
+
+@app.route('/resource', methods=['GET'])
+def get_resource():
+    if request.method == 'GET':
+        r = request.values.get('r')
+        file_path = os.path.join("resource", r)
+
+        if os.path.exists(file_path):
+            return send_file(file_path)
+        else:
+            abort(404)
+
 @app.route('/api/video', methods=['POST'])
 def make_video():
     if request.method == 'POST':
