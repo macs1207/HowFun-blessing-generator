@@ -15,6 +15,9 @@
         width: 100%;
         font-size: 80%;
     }
+    .embed-card {
+        width: 40rem;
+    }
 }
 
 @media screen and (max-width: 992px) and (min-width: 768px) {
@@ -34,9 +37,12 @@
         width: 100%;
         font-size: 80%;
     }
+    .embed-card {
+        width: 35rem;
+    }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) and (min-width: 512) {
     .font-main {
         font-size: 200%;
     }
@@ -52,6 +58,31 @@
     .embed-size {
         width: 100%;
         font-size: 80%;
+    }
+    .card-size {
+        width: 30rem;
+    }
+}
+
+@media screen and (max-width: 512)  {
+    .font-main {
+        font-size: 200%;
+    }
+    .font-second {
+        font-size: 200%;
+    }
+    .btn-font-size {
+        font-size: 180%;
+    }
+    .input-width {
+        width: 100%;
+    }
+    .embed-size {
+        width: 80%;
+        font-size: 80%;
+    }
+    .card-size {
+        width: 100%;
     }
 }
 
@@ -70,7 +101,7 @@ html, body, .fill {
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
-    width: 50%;
+    /* width: 50%; */
 }
 
 .line-size {
@@ -78,6 +109,7 @@ html, body, .fill {
     margin-right: auto;
     margin-bottom: 30px;
     text-align: center;
+    width: 80%!important;
 }
 
 .space {
@@ -93,5 +125,5 @@ html, body, .fill {
 
 .frame-size {
     height: 315px;
-    width: 460px;
+    max-width: 80%;
 }

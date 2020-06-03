@@ -27,19 +27,19 @@
     </head>
     <body>
         <div class="container-fluid bg-dark fill border border-dark">
-            <div class="alert alert-primary col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size" role="alert" style="width: 35rem; margin-top: 5rem;">
-                目前為先行釋出的 Beta 版本，未完善之處請多包涵<(_ _)>
+            <div class="alert alert-primary card-size embed-card center" role="alert" style="margin-top: 5rem;">
+                目前為先行釋出的 Beta 版本，未完善之處請多包涵 <(_ _)>
             </div>
-            <div class="card center embed-card" style="width: 35rem;">
+            <div class="card center embed-card card-size">
                 <div class="card-body">
                     <div class="card-title">
                         <h1 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size">HowFun 祝賀語產生器</h1>
                     </div>
                     <div class="row">
                         <div class="container line-size">
+                            <a href="https://github.com/macs1207/HowFun-blessing-generator" class="btn btn-primary" target="_blank" style="margin-bottom: 20px;">GitHub</a>
                             <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size">Demo 影片</h3>
-                            <a href="https://github.com/macs1207/HowFun-blessing-generator" class="btn btn-primary" target="_blank">GitHub</a>
-                            <video width="460" height="315" controls>
+                            <video class="frame-size" controls>
                                 <source src="/resource?r=demo.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
@@ -48,31 +48,31 @@
                 </div>
             </div>
 
-            <div class="card center embed-card" style="width: 35rem;" id="generator">
+            <div class="card center embed-card card-size" id="generator">
                 <div class="card-body">
                     <div class="card-title">
                         <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size">可以輸入注音ㄛ，特殊符號先不要</h3>
                     </div>
                     <div class="row justify-content-sm-center justify-content-md-center justify-content-lg-center">
                         <!-- <button type="button" class="btn btn-dark embed-size" disabled>祝賀詞</button>
-                                    <div class="btn-group line-size" role="group" aria-label="Basic example">
-                                        <button id="congNoun1" v-on:click="getContext" type="button" class="btn btn-secondary">鵬程萬里畢業快樂</button>
-                                        <button id="congNoun2" v-on:click="getContext" type="button" class="btn btn-secondary">步步高升畢業快樂</button>
-                                        <button id="congNoun3" v-on:click="getContext" type="button" class="btn btn-secondary">前程似錦畢業快樂</button>
-                                        <button id="congNoun4" v-on:click="getContext" type="button" class="btn btn-secondary">大鵬展翅畢業快樂</button>
-                                        <button id="congNoun5" v-on:click="getContext" type="button" class="btn btn-secondary">指考一百畢業快樂</button>
-                                    </div> -->
-                        <div class="col-10">
-                            <button type="button" class="btn btn-dark embed-size" disabled>祝賀內容</button>
+                                <div class="btn-group line-size" role="group" aria-label="Basic example">
+                                    <button id="congNoun1" v-on:click="getContext" type="button" class="btn btn-secondary">鵬程萬里畢業快樂</button>
+                                    <button id="congNoun2" v-on:click="getContext" type="button" class="btn btn-secondary">步步高升畢業快樂</button>
+                                    <button id="congNoun3" v-on:click="getContext" type="button" class="btn btn-secondary">前程似錦畢業快樂</button>
+                                    <button id="congNoun4" v-on:click="getContext" type="button" class="btn btn-secondary">大鵬展翅畢業快樂</button>
+                                    <button id="congNoun5" v-on:click="getContext" type="button" class="btn btn-secondary">指考一百畢業快樂</button>
+                                </div> -->
+                        <div class="line-size">
+                            <button type="button" class="btn btn-dark btn-block" disabled>祝賀內容</button>
                             <div class="input-group input-group-lg">
-                                <textarea type="text" class="form-control input-width" aria-label="Large"
-                                    aria-describedby="inputGroup-sizing-sm" placeholder="上限暫時50字" v-model="text"></textarea>
+                                <textarea type="text" class="form-control" aria-label="Large"
+                                    aria-describedby="inputGroup-sizing-sm" placeholder="上限暫時50字，守護How哥的嘴巴" v-model="text"></textarea>
                             </div>
                             <button id="send-btn" class="btn-font-size btn btn-primary space input-btn-width" type="button" v-on:click="getVideo">
                                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-show="waiting"></span>
                                 取得祝賀影片
                             </button>
-                            <!-- <a v-show="video" :href="video" class="btn-font-size btn btn-primary space input-btn-width" target="_blank">下載</a> -->
+                            <a v-show="video" :href="video" class="btn-font-size btn btn-primary space input-btn-width" target="_blank">沒有跳轉的話按這邊下載</a>
                         </div>
                     </div>
                 </div>
@@ -106,7 +106,7 @@
                                         let errormsg = '未定義錯誤';
                                         switch (response.bodyText) {
                                             case "too long":
-                                                errormsg = "字數超過啦";
+                                                errormsg = "你要讓How哥念到嘴酸ㄇ";
                                                 break;
                                             case "empty":
                                                 errormsg = "沒有文字不能送ㄛ";
@@ -136,13 +136,13 @@
                 })
             </script>
 
-            <div class="alert alert-danger col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size" role="alert"
-                style="width: 35rem; margin-top: 2rem;">
+            <div class="alert alert-danger card-size embed-card center" role="alert"
+                style="margin-top: 2rem;">
                 此網站之影片素材為 <a href="https://www.youtube.com/channel/UCxUzQ3wu0oJP_8YLWt71WgQ" target="_blank">HowFun</a> 頻道所有，如有版權問題，請聯繫 
                 <a href="mailto:m@macs1207.dev">m@macs1207.dev</a>
             </div>
 
-            <div class="card center embed-card" style="width: 35rem;">
+            <div class="card center embed-card card-size">
                 <div class="card-body">
                     <div class="card-title">
                         <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size">影片來源 YouTube</h3>
@@ -158,29 +158,28 @@
                             我們也同步釋出素材包和時間軸啦(つ´ω`)つ
                             <br>
                             <div class="btn-group" role="group" style="margin-top: 10px;">
-<<<<<<< HEAD
                                 <a class="btn btn-secondary" href="/resource?r=dictionarys.zip" target="_blank">時間軸</a>
                                 <a class="btn btn-secondary" href="/resource?r=videopack.zip" target="_blank">素材包</a>
-=======
-                                <a class="btn btn-secondary" href="https://github.com/macs1207/HowFun-blessing-generator/tree/master/dictionarys" target="_blank">時間軸</a>
-                                <a class="btn btn-secondary" href="https://github.com/macs1207/HowFun-blessing-generator/tree/master/videopack" target="_blank">素材包</a>
->>>>>>> 9364f3b11582392407ead5ba6de38bfda431820d
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="card center embed-card" style="width: 35rem;">
+            <div class="card center embed-card card-size">
                 <div class="card-body">
                     <div class="card-title">
                         <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size">應該會做的功能</h3>
                     </div>
                     <div class="row justify-content-sm-center justify-content-md-center justify-content-lg-center">
-                        <div class="col-10">
-                            <ul class="list-group">
+                        <div class="line-size">
+                            <ul class="list-group line-size">
                                 <li class="list-group-item">可選預設祝賀語 (...畢業快樂 etc.)</li>
                                 <li class="list-group-item">後端快取</li>
+                                <li class="list-group-item">轉注音的API多音字表現不佳</li>
+                                <li class="list-group-item">很多輕聲沒素材，拿接近的音來補沒念到的</li>
+                                <li class="list-group-item">預計稍晚會釋出雙平台BOT</li>
+                                <li class="list-group-item">空格可斷句</li>
                                 <li class="list-group-item">防呆加減做</li>
                                 <li class="list-group-item">還沒想到 :></li>
                             </ul>
@@ -189,20 +188,20 @@
                 </div>
             </div>
 
-            <div class="card center embed-card" style="width: 35rem; margin-bottom: 5rem;">
+            <div class="card center embed-card card-size" style="margin-bottom: 5rem;">
                 <div class="card-body">
                     <div class="card-title">
                         <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size">作者們</h3>
                     </div>
                     <div class="row justify-content-sm-center justify-content-md-center justify-content-lg-center">
-                        <div class="fb-page" data-href="https://www.facebook.com/NKUST.ITC/" data-tabs="timeline" data-width="460"
+                        <div class="fb-page line-size" data-href="https://www.facebook.com/NKUST.ITC/" data-tabs="timeline" data-width="460"
                             data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false"
                             data-show-facepile="false" style="margin-bottom: 10px;">
                             <blockquote cite="https://www.facebook.com/NKUST.ITC/" class="fb-xfbml-parse-ignore"><a
                                     href="https://www.facebook.com/NKUST.ITC/">高科大資訊研習社, NKUST Information Technology Club</a></blockquote>
                         </div>
-                        <div class="col-10">
-                            <ul class="list-group">
+                        <div class="line-size">
+                            <ul class="list-group line-size">
                                 <li class="list-group-item"><a href="https://github.com/macs1207" target="_blank">*Macs</a></li>
                                 <li class="list-group-item"><a href="https://github.com/chrisliu430" target="_blank">C.H</a></li>
                                 <li class="list-group-item"><a href="https://github.com/daidaidarwa" target="_blank">Daiwa</a></li>
