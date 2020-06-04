@@ -1,7 +1,9 @@
+from utils import word_parse
 from subprocess import PIPE, run
 from time import time
 import os
 import uuid
+import base64
 
 
 class VideoNotFoundError(Exception):
@@ -22,16 +24,21 @@ class VideoProcessor:
     def __init__(self, path="data"):
         self.path = path
 
-    def get_video(self, words):
-        
+    def get_video(self, text):
+        words = word_parse.get_bopomofo(text)
         paths = []
+
         for word in words:
             file_path = os.path.join(self.path, "words", f"{word}.mp4")
             if not os.path.exists(file_path):
                 raise VideoNotFoundError(words)
             paths.append(file_path)
         
-        video_id = f"{uuid.uuid4()}"
+        video_id = str(base64.urlsafe_b64encode(text.encode("utf-8")), "utf-8")
+        video_path = os.path.join("video", f"{video_id}.mp4")
+        if os.path.exists(video_path):
+            return video_id
+        
         tmp_file = os.path.join("tmp", f"{video_id}.txt")
         
         with open(tmp_file, 'w', encoding='utf-8') as f:
@@ -54,7 +61,7 @@ class VideoProcessor:
             raise VideoCombinedError()
 
         command = ['ffmpeg', '-y', '-i', os.path.join("video", f'_{video_id}.mp4'),
-                   '-filter_complex', '[0:v]setpts=0.5*PTS[v];[0:a]atempo=2.0[a]',
+                   '-filter_complex', '[0:v]setpts=0.8*PTS[v];[0:a]atempo=1.25[a]',
                    '-map', '[v]', '-map', '[a]', output_path]
         rs = run(command, stdin=PIPE, stdout=PIPE, shell=True)
         os.remove(os.path.join("video", f'_{video_id}.mp4'))
@@ -62,3 +69,4 @@ class VideoProcessor:
             raise VideoCombinedError("Adjust video setpts failed.")
         
         
+

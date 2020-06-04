@@ -1,4 +1,3 @@
-from utils import word_parse
 from utils.video_process import VideoProcessor, VideoNotFoundError, VideoCombinedError
 from flask import Flask, request, jsonify, make_response, abort, send_file, render_template, url_for
 import os
@@ -66,9 +65,7 @@ def make_video():
         if len(text) > 50:
             return make_response("text is too long", 400)
         try:
-            bopomofo = word_parse.get_bopomofo(text)
-            v = VideoProcessor()
-            video_id = v.get_video(bopomofo)
+            video_id = VideoProcessor().get_video(text)
             print(video_id)
             return jsonify({
                 "video_id": video_id
