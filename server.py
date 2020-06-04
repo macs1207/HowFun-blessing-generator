@@ -82,14 +82,13 @@ def make_video():
 
 @app.route('/api/feedback', method = ['POST'])
 def get_feedbackvalue():
-    if request.method == 'POST':
-        text = request.values.get('feedback')
-        text = text.strip('[]')
-        if len(text) == 0:
-            return make_response("empty", 500)
-        if len(text) > 500:
-            return make_response("too long", 500)
-        conn_database(text)
+    text = request.values.get('feedback')
+    text = text.strip('[]')
+    if text == "":
+        return make_response("feedback empty", 400)
+    if len(text) > 500:
+        return make_response("feedback too long", 400)
+    conn_database(text)
         
 @app.context_processor
 def override_url_for():
