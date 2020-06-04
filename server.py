@@ -91,8 +91,9 @@ def get_feedbackvalue():
         return make_response("feedback empty", 400)
     if len(text) > 500:
         return make_response("feedback too long", 400)
-    return make_response(jsonify({"msg": "fuck"}), 200)
-    conn_database(text)
+    conn_database(text)    
+    return make_response("success", 200)
+    
 
 @app.context_processor
 def override_url_for():
