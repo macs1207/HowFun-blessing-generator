@@ -1,3 +1,4 @@
+from utils import word_parse
 from subprocess import PIPE, run
 from time import time
 import os
@@ -23,16 +24,17 @@ class VideoProcessor:
     def __init__(self, path="data"):
         self.path = path
 
-    def get_video(self, words):
-        
+    def get_video(self, text):
+        words = word_parse.get_bopomofo(text)
         paths = []
+
         for word in words:
             file_path = os.path.join(self.path, "words", f"{word}.mp4")
             if not os.path.exists(file_path):
                 raise VideoNotFoundError(words)
             paths.append(file_path)
         
-        video_id = str(base64.urlsafe_b64encode(words.encode("utf-8")), "utf-8")
+        video_id = str(base64.urlsafe_b64encode(text.encode("utf-8")), "utf-8")
         video_path = os.path.join("video", f"{video_id}.mp4")
         if os.path.exists(video_path):
             return video_id

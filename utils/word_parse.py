@@ -1,4 +1,5 @@
 from pypinyin import pinyin, lazy_pinyin, Style
+from utils import word_parse
 
 def get_bopomofo(words):
     bopomofo = pinyin(words, style=Style.BOPOMOFO)
