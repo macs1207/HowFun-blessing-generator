@@ -83,8 +83,7 @@ def make_video():
 @app.route('/api/feedback', method = ['POST'])
 def get_feedbackvalue():
     text = request.values.get('feedback')
-    text = text.strip('[]')
-    if text == "":
+    if not text.strip():
         return make_response("feedback empty", 400)
     if len(text) > 500:
         return make_response("feedback too long", 400)
