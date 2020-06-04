@@ -61,7 +61,7 @@ class VideoProcessor:
             raise VideoCombinedError()
 
         command = ['ffmpeg', '-y', '-i', os.path.join("video", f'_{video_id}.mp4'),
-                   '-filter_complex', '[0:v]setpts=0.8*PTS[v];[0:a]atempo=1.25[a]',
+                   '-filter_complex', '[0:v]setpts=0.5*PTS[v];[0:a]atempo=2.0[a]',
                    '-map', '[v]', '-map', '[a]', output_path]
         rs = run(command, stdin=PIPE, stdout=PIPE, shell=True)
         os.remove(os.path.join("video", f'_{video_id}.mp4'))
