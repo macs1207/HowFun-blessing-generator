@@ -61,9 +61,13 @@ def make_video():
     if text is not None:
         text = text.strip()
         if len(text) == 0:
-            return make_response("text is empty", 400)
+            return make_response(jsonify({
+                "error": "text is empty",
+            }), 400)
         if len(text) > 50:
-            return make_response("text is too long", 400)
+            return make_response(jsonify({
+                "error": "text is too long",
+            }), 400)
         try:
             video_id = VideoProcessor().get_video(text)
             print(video_id)
@@ -72,15 +76,24 @@ def make_video():
             })
         except VideoNotFoundError as e:
             logging.error(e)
-            return make_response("video not found error", 500)
+            return make_response(jsonify({
+                "error": "video not found error",
+                "detail": e.detail
+            }), 500)
         except VideoCombinedError as e:
             logging.error(e)
-            return make_response("combine error", 500)
+            return make_response(jsonify({
+                "error": "combine error",
+            }), 500)
         except Exception as e:
             logging.error(e)
-            return make_response("unknown error", 500)
+            return make_response(jsonify({
+                "error": "unknown error",
+            }), 500)
     else:
-        return make_response("need text", 400)
+        return make_response(jsonify({
+            "error": "need text",
+        }), 400)
 
 
 @app.context_processor

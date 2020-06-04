@@ -103,16 +103,18 @@
                                         window.open(this.video, '_blank')
                                     }, function (response) {
                                         console.log(`${response.status} ${response.bodyText}`);
+                                        response = JSON.parse(response.bodyText);
+                                        console.log(response)
                                         let errormsg = '未定義錯誤';
-                                        switch (response.bodyText) {
-                                            case "too long":
+                                        switch (response.error) {
+                                            case "text is too long":
                                                 errormsg = "你要讓How哥念到嘴酸ㄇ";
                                                 break;
-                                            case "empty":
+                                            case "text is empty" || "need text":
                                                 errormsg = "沒有文字不能送ㄛ";
                                                 break;
-                                            case "not found":
-                                                errormsg = "How哥沒念這個字";
+                                            case "video not found error":
+                                                errormsg = `How哥沒念這些字：${response.detail}`;
                                                 break;
                                         }
                                         Swal.fire(

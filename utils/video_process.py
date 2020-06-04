@@ -9,6 +9,7 @@ import base64
 class VideoNotFoundError(Exception):
     def __init__(self, words):
         self.message = f'Video is not found. {str(words)}'
+        self.detail = words
         super().__init__()
     
     def __str__(self):
@@ -28,11 +29,15 @@ class VideoProcessor:
         words = word_parse.get_bopomofo(text)
         paths = []
 
+        not_found_words = []
         for word in words:
             file_path = os.path.join(self.path, "words", f"{word}.mp4")
             if not os.path.exists(file_path):
-                raise VideoNotFoundError(words)
+                not_found_words.append(word)
             paths.append(file_path)
+            
+        if not_found_words:
+            raise VideoNotFoundError(not_found_words)
         
         video_id = str(base64.urlsafe_b64encode(text.encode("utf-8")), "utf-8")
         video_path = os.path.join("video", f"{video_id}.mp4")
