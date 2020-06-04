@@ -6,7 +6,7 @@ import json
 class VideoSplitter:
     _LENGTH = 0.8
     
-    def __init__(self, path="data"):
+    def __init__(self, path="resource"):
         self.path = path
         self.timeline = None
 

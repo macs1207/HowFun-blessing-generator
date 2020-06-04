@@ -21,7 +21,7 @@ class VideoCombinedError(Exception):
         super().__init__(message)
 
 class VideoProcessor:
-    def __init__(self, path="data"):
+    def __init__(self, path="resource"):
         self.path = path
 
     def get_video(self, text):
