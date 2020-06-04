@@ -18,3 +18,5 @@
 - [C.H](https://github.com/chrisliu430)
 - [Daiwa](https://github.com/daidaidarwa)
 - [asdkmm5050](https://github.com/asdkmm5050)
+- [VN7](https://github.com/vn7n24fzkq)
+- [Weikeup](https://github.com/Catossun)
