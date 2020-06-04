@@ -83,9 +83,7 @@ def make_video():
 
 @app.route('/api/feedback', methods = ['POST'])
 def get_feedbackvalue():
-    text = request.get_data()
-    text = json.loads(text)
-    text = text.get('feedback')
+    text = request.value.get('feedback')
     if text is None:
         return make_response("need feedback", 400)
     text = text.strip()
@@ -93,6 +91,7 @@ def get_feedbackvalue():
         return make_response("feedback empty", 400)
     if len(text) > 500:
         return make_response("feedback too long", 400)
+    return make_response(jsonify({"msg": "fuck"}), 200)
     conn_database(text)
 
 @app.context_processor
