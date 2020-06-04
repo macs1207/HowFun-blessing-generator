@@ -1,5 +1,5 @@
 from utils import word_parse
-from feedback.feedbk import conn_database
+from utils.feedbk import conn_database
 from utils.video_process import VideoProcessor, VideoNotFoundError, VideoCombinedError
 from flask import Flask, request, jsonify, make_response, abort, send_file, render_template, url_for
 import os

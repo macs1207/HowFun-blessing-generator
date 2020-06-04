@@ -4,6 +4,7 @@ import os
 path = os.getcwd()
 
 def conn_database(feedback):
+
     conn = sqlite3.connect(path + "\\feedback.db")
     c = conn.cursor()
     try:
@@ -13,4 +14,6 @@ def conn_database(feedback):
     c.execute('''INSERT INTO FeedBack (detail) VALUES(\"%s\");'''%(feedback))
     conn.commit()
     conn.close()
-    
+    return feedback
+if __name__ == "__main__":
+    print(conn_database("test"))
