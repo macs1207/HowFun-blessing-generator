@@ -32,7 +32,7 @@ def index():
 @app.route('/video', methods=['GET'])
 def get_video():
     video_id = request.values.get('v')
-    if video_id != None:
+    if video_id is not None:
         file_path = os.path.join("video", f"{video_id}.mp4")
 
         if os.path.exists(file_path):
@@ -46,7 +46,7 @@ def get_video():
 @app.route('/resource', methods=['GET'])
 def get_resource():
     r = request.values.get('r')
-    if r != None:
+    if r is not None:
         file_path = os.path.join("resource", r)
 
         if os.path.exists(file_path):
@@ -59,7 +59,7 @@ def get_resource():
 @app.route('/api/video', methods=['POST'])
 def make_video():
     text = request.values.get('text')
-    if text != None:
+    if text is not None:
         text = text.strip()
         if len(text) == 0:
             return make_response("text is empty", 400)
@@ -78,7 +78,7 @@ def make_video():
             return make_response("video not found error", 500)
         except VideoCombinedError as e:
             logging.error(e)
-            return make_response("combin error", 500)
+            return make_response("combine error", 500)
         except Exception as e:
             logging.error(e)
             return make_response("unknown error", 500)
