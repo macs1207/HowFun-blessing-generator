@@ -68,14 +68,16 @@
                                 <textarea type="text" class="form-control" aria-label="Large"
                                     aria-describedby="inputGroup-sizing-sm" placeholder="上限暫時50字，守護How哥的嘴巴" v-model="text"></textarea>
                             </div>
-                            <button id="getVideo-btn" class="btn-font-size btn btn-primary space input-btn-width" type="button" v-on:click="getVideo">
-                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-show="videoWaiting"></span>
-                                取得祝賀影片
-                            </button>
-                            <button id="getVoice-btn" class="btn-font-size btn btn-primary space input-btn-width" type="button" v-on:click="getVoice">
-                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-show="voiceWaiting"></span>
-                                取得祝賀音檔
-                            </button>
+                            <div class="btn-group space input-btn-width" role="group">
+                                <button id="getVideo-btn" class="btn-font-size btn btn-primary" type="button" v-on:click="getVideo">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-show="videoWaiting"></span>
+                                    取得祝賀影片
+                                </button>
+                                <button id="getVoice-btn" class="btn-font-size btn btn-primary" type="button" v-on:click="getVoice" disabled>
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-show="voiceWaiting"></span>
+                                    取得祝賀音檔
+                                </button>
+                            </div>
                             <a v-show="video" :href="video" class="btn-font-size btn btn-primary space input-btn-width" target="_blank">影片沒有跳轉的話按這邊下載</a>
                             <a v-show="voice" :href="voice" class="btn-font-size btn btn-primary space input-btn-width" target="_blank">音檔沒有跳轉的話按這邊下載</a>
                         </div>
