@@ -4,6 +4,7 @@ __pycache__
 
 tmp
 video
+audio
 resource/*.zip
 
 error.log
