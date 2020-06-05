@@ -22,7 +22,8 @@ if not os.path.exists("tmp"):
     os.mkdir("tmp")
 if not os.path.exists("video"):
     os.mkdir("video")
-
+if not os.path.exists("audio"):
+    os.mkdir("audio")
 
 @app.route("/")
 def index():
@@ -41,6 +42,18 @@ def get_video():
     else:
         return make_response("need video id", 400)
 
+@app.route('/audio', methods=['GET'])
+def get_audio():
+    audio_id = request.values.get('a')
+    if audio_id is not None:
+        file_path = os.path.join("audio", f"{audio_id}.mp3")
+
+        if os.path.exists(file_path):
+            return send_file(file_path)
+        else:
+            abort(404)
+    else:
+        return make_response("need audio id", 400)
 
 @app.route('/resource', methods=['GET'])
 def get_resource():
@@ -58,6 +71,7 @@ def get_resource():
 @app.route('/api/video', methods=['POST'])
 def make_video():
     text = request.values.get('text')
+    file_format = "mp3"
     if text is not None:
         text = text.strip()
         if len(text) == 0:
@@ -69,7 +83,7 @@ def make_video():
                 "error": "text is too long",
             }), 400)
         try:
-            video_id = VideoProcessor().get_video(text)
+            dir_path, video_id = VideoProcessor().get_media(text, file_format)
             print(video_id)
             return jsonify({
                 "video_id": video_id
