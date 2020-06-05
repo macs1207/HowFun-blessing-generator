@@ -68,11 +68,16 @@
                                 <textarea type="text" class="form-control" aria-label="Large"
                                     aria-describedby="inputGroup-sizing-sm" placeholder="上限暫時50字，守護How哥的嘴巴" v-model="text"></textarea>
                             </div>
-                            <button id="send-btn" class="btn-font-size btn btn-primary space input-btn-width" type="button" v-on:click="getVideo">
-                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-show="waiting"></span>
+                            <button id="getVideo-btn" class="btn-font-size btn btn-primary space input-btn-width" type="button" v-on:click="getVideo">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-show="videoWaiting"></span>
                                 取得祝賀影片
                             </button>
-                            <a v-show="video" :href="video" class="btn-font-size btn btn-primary space input-btn-width" target="_blank">沒有跳轉的話按這邊下載</a>
+                            <button id="getVoice-btn" class="btn-font-size btn btn-primary space input-btn-width" type="button" v-on:click="getVoice">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-show="voiceWaiting"></span>
+                                取得祝賀音檔
+                            </button>
+                            <a v-show="video" :href="video" class="btn-font-size btn btn-primary space input-btn-width" target="_blank">影片沒有跳轉的話按這邊下載</a>
+                            <a v-show="voice" :href="voice" class="btn-font-size btn btn-primary space input-btn-width" target="_blank">音檔沒有跳轉的話按這邊下載</a>
                         </div>
                     </div>
                 </div>
@@ -82,14 +87,16 @@
                     el: '#generator',
                     data: {
                         text: '',
-                        waiting: false,
+                        videoWaiting: false,
+                        voiceWaiting: false,
                         video: null,
+                        voice: null,
                     },
                     methods: {
                         getVideo: function () {
                             if (this.text) {
-                                $("#send-btn").attr('disabled', true);
-                                this.waiting = true;
+                                $("#getVideo-btn").attr('disabled', true);
+                                this.videoWaiting = true;
                                 this.$http.post("/api/video", {
                                     text: this.text,
                                 }, { emulateJSON: true }).then(
@@ -97,9 +104,8 @@
                                         // console.log(`${response.status} ${response.bodyText}`);
                                         this.video = `/video?v=${JSON.parse(response.bodyText)["video_id"]}`;
                                         // console.log(this.video);
-                                        this.waiting = false;
-                                        $("#send-btn").attr('disabled', false);
-
+                                        this.videoWaiting = false;
+                                        $("#getVideo-btn").attr('disabled', false);
                                         window.open(this.video, '_blank')
                                     }, function (response) {
                                         console.log(`${response.status} ${response.bodyText}`);
@@ -122,8 +128,126 @@
                                             '',
                                             'error'
                                         )
+                                        this.videoWaiting = false;
+                                        $("#getVideo-btn").attr('disabled', false);
+                                    }
+                                );
+                            } else {
+                                Swal.fire(
+                                    '沒有文字不能送ㄛ',
+                                    '',
+                                    'error'
+                                )
+                            }
+                        }, getVoice: function() {
+                            if (this.text) {
+                                $("#getVoice-btn").attr('disabled', true);
+                                this.waiting = true;
+                                this.$http.post("/api/voice", {
+                                    text: this.text,
+                                }, { emulateJSON: true }).then(
+                                    function (response) {
+                                        // console.log(`${response.status} ${response.bodyText}`);
+                                        this.voice = `/voice?v=${JSON.parse(response.bodyText)["voice_id"]}`;
+                                        // console.log(this.video);
                                         this.waiting = false;
-                                        $("#send-btn").attr('disabled', false);
+                                        $("#getVoice-btn").attr('disabled', false);
+                                        window.open(this.voice, '_blank')
+                                    }, function (response) {
+                                        console.log(`${response.status} ${response.bodyText}`);
+                                        let errormsg = '未定義錯誤';
+                                        switch (response.bodyText) {
+                                            case "too long":
+                                                errormsg = "你要讓How哥念到嘴酸ㄇ";
+                                                break;
+                                            case "empty":
+                                                errormsg = "沒有文字不能送ㄛ";
+                                                break;
+                                            case "not found":
+                                                errormsg = "How哥沒念這個字";
+                                                break;
+                                        }
+                                        Swal.fire(
+                                            errormsg,
+                                            '',
+                                            'error'
+                                        )
+                                        this.waiting = false;
+                                        $("#getVoice-btn").attr('disabled', false);
+                                    }
+                                );
+                            } else {
+                                Swal.fire(
+                                    '沒有文字不能送ㄛ',
+                                    '',
+                                    'error'
+                                )
+                            }
+                        }
+                    }
+                })
+            </script>
+
+            <div class="card center embed-card card-size" id="feedback">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 line-size">有甚麼想跟我們說的，都可以在這裡說哦</h3>
+                    </div>
+                    <div class="row justify-content-sm-center justify-content-md-center justify-content-lg-center">
+                        <div class="line-size">
+                            <button type="button" class="btn btn-dark btn-block" disabled>回饋內容</button>
+                            <div class="input-group input-group-lg">
+                                <textarea type="text" class="form-control" aria-label="Large"
+                                    aria-describedby="inputGroup-sizing-sm" placeholder="不要輸入沒有用的內容哦哦哦" v-model="feedback"></textarea>
+                            </div>
+                            <button id="feedback-btn" class="btn-font-size btn btn-primary space input-btn-width" type="button" v-on:click="returnFeedback">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-show="waiting"></span>
+                                送出回饋
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                window.feedback = new Vue({
+                    el: '#feedback',
+                    data: {
+                        feedback: '',
+                        waiting: false,
+                    },
+                    methods: {
+                        returnFeedback: function () {
+                            if (this.feedback) {
+                                $("#feedback-btn").attr('disabled', true);
+                                this.waiting = true;
+                                this.$http.post("/api/feedback", {
+                                    feedback: this.feedback,
+                                }, { emulateJSON: true }).then(
+                                    function (response) {
+                                        this.waiting = false;
+                                        $("#feedback-btn").attr('disabled', false);
+                                    }, function (response) {
+                                        console.log(this.feedback)
+                                        console.log(`${response.status} ${response.bodyText}`);
+                                        let errormsg = '未定義錯誤';
+                                        switch (response.bodyText) {
+                                            case "feedback too long":
+                                                errormsg = "雖然很感謝你的回饋，但是回饋太長囉";
+                                                break;
+                                            case "need feedback":
+                                                errormsg = "請輸入回饋哦";
+                                                break;
+                                            case "feedback empty":
+                                                errormsg = "回饋是空的呢";
+                                                break;
+                                        }
+                                        Swal.fire(
+                                            errormsg,
+                                            '',
+                                            'error'
+                                        )
+                                        this.waiting = false;
+                                        $("#feedback-btn").attr('disabled', false);
                                     }
                                 );
                             } else {
