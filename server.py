@@ -70,10 +70,10 @@ def get_resource():
     else:
         return make_response("need resource id", 400)
 
-@app.route('/api/video', methods=['POST'])
+@app.route('/api/media', methods=['POST'])
 def make_video():
     text = request.values.get('text')
-    file_format = "mp3"
+    file_format = request.values.get('format')
     if text is not None:
         text = text.strip()
         if len(text) == 0:
@@ -85,10 +85,11 @@ def make_video():
                 "error": "text is too long",
             }), 400)
         try:
-            dir_path, video_id = VideoProcessor().get_media(text, file_format)
-            print(video_id)
+            dir_path, media_id = VideoProcessor().get_media(text, file_format)
+            print(media_id)
             return jsonify({
-                "video_id": video_id
+                "media_id": media_id,
+                "path": dir_path
             })
         except VideoNotFoundError as e:
             logging.error(e)
