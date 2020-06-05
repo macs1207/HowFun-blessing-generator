@@ -198,9 +198,9 @@
                             <button type="button" class="btn btn-dark btn-block" disabled>回饋內容</button>
                             <div class="input-group input-group-lg">
                                 <textarea type="text" class="form-control" aria-label="Large"
-                                    aria-describedby="inputGroup-sizing-sm" placeholder="不要輸入沒有用的內容哦哦哦" v-model="feedback"></textarea>
+                                    aria-describedby="inputGroup-sizing-sm" placeholder="不要輸入沒有用的內容哦哦哦，上限500字" v-model="feedback"></textarea>
                             </div>
-                            <button id="feedback-btn" class="btn-font-size btn btn-primary space input-btn-width" type="button" v-on:click="returnFeedback">
+                            <button id="feedback-btn" class="btn-font-size btn btn-primary space input-btn-width" type="button" v-on:click="sendFeedback">
                                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-show="waiting"></span>
                                 送出回饋
                             </button>
@@ -216,7 +216,7 @@
                         waiting: false,
                     },
                     methods: {
-                        returnFeedback: function () {
+                        sendFeedback: function () {
                             if (this.feedback) {
                                 $("#feedback-btn").attr('disabled', true);
                                 this.waiting = true;

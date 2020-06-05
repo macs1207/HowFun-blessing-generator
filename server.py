@@ -99,7 +99,7 @@ def make_video():
 
 @app.route('/api/feedback', methods = ['POST'])
 def feedback():
-    text = request.value.get('feedback')
+    text = request.values.get('feedback')
     if text is None:
         return make_response("need feedback", 400)
     text = text.strip()
