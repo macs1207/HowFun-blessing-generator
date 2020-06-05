@@ -208,6 +208,12 @@
                                     feedback: this.feedback,
                                 }, { emulateJSON: true }).then(
                                     function (response) {
+                                        Swal.fire(
+                                            '我們收到啦!',
+                                            '',
+                                            'success'
+                                        )
+                                        this.feedback = '';
                                         this.waiting = false;
                                         $("#feedback-btn").attr('disabled', false);
                                     }, function (response) {

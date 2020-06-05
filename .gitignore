@@ -8,3 +8,4 @@ audio
 resource/*.zip
 
 error.log
+*.db
