@@ -1,7 +1,9 @@
+from utils.feedback import save_to_db
 from utils.video_process import VideoProcessor, VideoNotFoundError, VideoCombinedError
 from flask import Flask, request, jsonify, make_response, abort, send_file, render_template, url_for
 import os
 import logging
+import json
 from argparse import ArgumentParser
 
 parser = ArgumentParser()
@@ -95,11 +97,22 @@ def make_video():
             "error": "need text",
         }), 400)
 
-
+@app.route('/api/feedback', methods = ['POST'])
+def feedback():
+    text = request.value.get('feedback')
+    if text is None:
+        return make_response("need feedback", 400)
+    text = text.strip()
+    if len(text) == 0:
+        return make_response("feedback is empty", 400)
+    if len(text) > 500:
+        return make_response("feedback is too long", 400)
+    save_to_db(text)
+    return make_response("successful", 200)
+    
 @app.context_processor
 def override_url_for():
     return dict(url_for=dated_url_for)
-
 
 def dated_url_for(endpoint, **values):
     if endpoint == 'static':
